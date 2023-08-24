@@ -41,7 +41,7 @@ DO_VERBOSE=
 
 # fetch defaults
 SITE="https://github.com"
-ACCOUNT="opnsense"
+ACCOUNT="biptec/opnsense-"
 DIRECTORY="/usr"
 
 while getopts a:d:fnrs:uVz OPT; do
@@ -124,7 +124,7 @@ git_update()
 	if [ -d "${DIRECTORY}/${REPO}/.git" ]; then
 		(cd "${DIRECTORY}/${REPO}"; git fetch --all --prune; git pull)
 	else
-		git clone ${SITE}/${ACCOUNT}/${REPO} "${DIRECTORY}/${REPO}"
+		git clone ${SITE}/${ACCOUNT}${REPO} "${DIRECTORY}/${REPO}"
 		BRANCH=
 		if [ -f ${CONF} ]; then
 			BRANCH=$(make -C /usr/tools -v "$(echo ${REPO} | tr '[:lower:]' '[:upper:]')BRANCH" SETTINGS=${ABI})
