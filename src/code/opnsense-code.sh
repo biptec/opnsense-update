@@ -47,9 +47,10 @@ DO_VERBOSE=
 # fetch defaults
 SITE="https://github.com"
 ACCOUNT="opnsense"
+PREFIX=
 DIRECTORY="/usr"
 
-while getopts a:d:fno:r:s:uVz OPT; do
+while getopts a:d:fno:p:r:s:uVz OPT; do
 	case ${OPT} in
 	a)
 		ACCOUNT=${OPTARG}
@@ -65,6 +66,9 @@ while getopts a:d:fno:r:s:uVz OPT; do
 		;;
 	o)
 		DO_ORIGIN="-o ${OPTARG}"
+		;;
+	p)
+		PREFIX=${OPTARG}
 		;;
 	r)
 		DO_RELEASE="-r ${OPTARG}"
@@ -125,7 +129,7 @@ git_update()
 	fi
 
 	if [ ! -d "${DIRECTORY}/${REPO}/.git" ]; then
-		${GIT_CLONE} ${SITE}/${ACCOUNT}/${REPO} "${DIRECTORY}/${REPO}"
+		${GIT_CLONE} "${SITE}/${ACCOUNT}/${PREFIX}${REPO}" "${DIRECTORY}/${REPO}"
 	else
 		(cd "${DIRECTORY}/${REPO}"; ${GIT_FETCH})
 	fi
